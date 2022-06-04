@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import './quetion.dart';
-import './answer.dart';
+import './quize.dart';
+import './result.dart';
+
 void main() {
   runApp(MyApp());
 }
+
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -24,40 +26,32 @@ class MyAppState extends State<MyApp> {
 
   var questionIdx = 0;
   Widget build(BuildContext context) {
-    var question = [
+    var questions = [
       {
-        'questionText': 'What\'s your favorite color?',
-        'answers': ['Black', 'Red', 'Green', 'White'],
+        'questionText': 'What\'s your favorite proffesion?',
+        'answers': ['Doctor', 'Programmer', 'Engineer', 'Carpenter'],
       },
       {
-        'questionText': 'What\'s your favorite animal?',
-        'answers': ['RAbbit', 'Cat', 'Dog', 'Snake'],
+        'questionText': 'Do you like pets?',
+        'answers': ['Yes', 'No'],
       },
       {
-        'questionText': 'What\'s your favorite pesrson?',
+        'questionText': 'What\'s your favorite Footbal player?',
         'answers': ['Benzema', 'Mbappe', 'Messi', 'Madison'],
       },
     ];
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Quize'),
-        ),
-        // ignore: prefer_const_literals_to_create_immutables
-        body: Column(children: [
-          Question(
-            (question[questionIdx % 3]['questionText'] as String ),
+          appBar: AppBar(
+            title: const Text('Quize'),
           ),
-          ...(question[questionIdx % 3]['answers'] as List<String>)
-              .map((answer) {
-            return Answer(answerQuestion, answer);
-          }).toList(),
-          // Answer(answerQuestion),
-          // Answer(answerQuestion),
-          // Answer(answerQuestion),
-          // Answer(answerQuestion),
-        ]),
-      ),
+          // ignore: prefer_const_literals_to_create_immutables
+          body: questionIdx < questions.length
+              ? Quize(answerQuestion: answerQuestion, 
+              questionIndex: questionIdx,
+              questions:questions,
+              )
+              : Result()),
     );
   }
 }
