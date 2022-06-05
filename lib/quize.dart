@@ -4,8 +4,7 @@ import './answer.dart';
 
 class Quize extends StatelessWidget {
   final List<Map<String, Object>> questions;
-  final VoidCallback answerQuestion;
-  
+  final answerQuestion;
   var questionIndex;
   Quize(
       {required this.questions,
@@ -19,18 +18,16 @@ class Quize extends StatelessWidget {
           height: 400,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(
-                'assets/images/quize.png',
-                // fit:Box.fill ,
-              ),
-            ),
+                image: AssetImage('assets/images/quize.png'), fit: BoxFit.fill),
           ),
         ),
         Question(
           (questions[questionIndex]['questionText'] as String),
         ),
-        ...(questions[questionIndex]['answers'] as List<String>).map((answer) {
-          return Answer(answerQuestion, answer);
+        ...(questions[questionIndex]['answers'] as List<Map<String, Object>>)
+            .map((answer) {
+          return Answer(
+              () => answerQuestion(answer['score']), answer['text'] as String);
         }).toList(),
         // Answer(answerQuestion),
         // Answer(answerQuestion),
